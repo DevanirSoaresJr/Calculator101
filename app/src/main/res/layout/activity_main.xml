@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/colorBackground">
 
     <EditText
         android:id="@+id/etNumber1"
@@ -44,9 +45,9 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="TextView"
+        android:text=""
         android:textSize="35dp"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorGold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,6 +63,8 @@
         android:text="+"
         android:textSize="25dp"
         android:textStyle="bold"
+        android:textColor="@color/colorWhite"
+        android:background="@color/colorBlue"
         app:layout_constraintBaseline_toBaselineOf="@+id/btnSubtract"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvResult" />
@@ -76,6 +79,8 @@
         android:text="-"
         android:textSize="25dp"
         android:textStyle="bold"
+        android:textColor="@color/colorWhite"
+        android:background="@color/colorBlue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.635"
         app:layout_constraintStart_toEndOf="@+id/btnAdd"
@@ -90,6 +95,8 @@
         android:text="x"
         android:textStyle="bold"
         android:textSize="25dp"
+        android:textColor="@color/colorWhite"
+        android:background="@color/colorBlue"
         app:layout_constraintBaseline_toBaselineOf="@+id/btnDivide"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnAdd" />
@@ -101,7 +108,9 @@
         android:layout_marginTop="44dp"
         android:layout_marginEnd="60dp"
         android:text="÷"
-        android:textSize="25dp"
+        android:textSize="30dp"
+        android:textColor="@color/colorWhite"
+        android:background="@color/colorBlue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSubtract" />
 

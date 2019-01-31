@@ -24,8 +24,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String message = "Hello";
-
         etNumberOne = findViewById(R.id.etNumber1);
         etNumberTwo = findViewById(R.id.etNumber2);
         btnAdd = findViewById(R.id.btnAdd);
@@ -44,6 +42,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btnSubtract.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String result = subtract(etNumberOne.getText().toString(),
+                        etNumberTwo.getText().toString());
+
+                tvResults.setText(result);
+            }
+        });
+
     }
 
     private String add(String numberOne, String numberTwo){
@@ -56,6 +64,20 @@ public class MainActivity extends AppCompatActivity {
         int a = Integer.parseInt(numberOne);
         int b = Integer.parseInt(numberTwo);
         int result = a + b;
+        /*return Integer.toString(result);*/
+        return String.valueOf(result);
+    }
+
+    private String subtract(String numberOne, String numberTwo){
+        if(numberOne.equals("")|| numberTwo.isEmpty()) {
+            Toast.makeText(this,
+                    "Please fill the empty gaps with valid numbers pretty pleeaaaaase",
+                    Toast.LENGTH_SHORT).show();
+            return null;
+        }
+        int c = Integer.parseInt(numberOne);
+        int d = Integer.parseInt(numberTwo);
+        int result = c - d;
         /*return Integer.toString(result);*/
         return String.valueOf(result);
     }
