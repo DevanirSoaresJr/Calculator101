@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, LogsActivity.class);
                 intent.putStringArrayListExtra("LogsResult", (ArrayList<String>)log);
+                Room room = new Room("Training Room", 4);
+                intent.putExtra("Room", room);
                 startActivity(intent);
             }
         });
@@ -149,4 +151,6 @@ public class MainActivity extends AppCompatActivity {
         /*return Integer.toString(result);*/
         return String.valueOf(result);
     }
+
+
 }
