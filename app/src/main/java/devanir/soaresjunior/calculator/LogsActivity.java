@@ -5,6 +5,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class LogsActivity extends AppCompatActivity {
@@ -25,7 +29,19 @@ public class LogsActivity extends AppCompatActivity {
     }
         /*tvLogs.setText(stringBuilder.toString());*/
         Room room = getIntent().getParcelableExtra("Room");
-        tvLogs.setText(room.getName());
+        tvLogs.setText(readDataFromFile());
+    }
+    private String readDataFromFile(){
+        File file = new File(getFilesDir(), "Logs.txt");
+        int size = (int) file.length();
+        byte[] contents = new byte[size];
+        try (FileInputStream fileInputStream = new FileInputStream(file)){
+            fileInputStream.read(contents);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return new String(contents);
+
     }
 
 }

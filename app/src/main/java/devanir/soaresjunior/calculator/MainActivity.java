@@ -1,5 +1,6 @@
 package devanir.soaresjunior.calculator;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,11 +48,11 @@ public class MainActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            String result = add(etNumberOne.getText().toString(),
-                etNumberTwo.getText().toString());
+                String result = add(etNumberOne.getText().toString(),
+                        etNumberTwo.getText().toString());
 
-            tvResults.setText(result);
-            log.add("Result of Addition: " + result);
+                tvResults.setText(result);
+                log.add("Result of Addition: " + result);
             }
         });
 
@@ -86,10 +91,14 @@ public class MainActivity extends AppCompatActivity {
         btnLogs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LogsActivity.class);
-                intent.putStringArrayListExtra("LogsResult", (ArrayList<String>)log);
-                Room room = new Room("Training Room", 4);
-                intent.putExtra("Room", room);
+                if (log.size()>0){
+                    writeLogsToFile();
+                }
+
+                Intent intent = new Intent
+                        (MainActivity.this, LogsActivity.class);
+                intent.putStringArrayListExtra("LogsResult",
+                        (ArrayList<String>) log);
                 startActivity(intent);
             }
         });
@@ -97,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private String add(String numberOne, String numberTwo){
-        if(numberOne.equals("")|| numberTwo.isEmpty()) {
+    private String add(String numberOne, String numberTwo) {
+        if (numberOne.equals("") || numberTwo.isEmpty()) {
             Toast.makeText(this,
                     "Please fill the empty gaps with valid numbers pretty pleeaaaaase",
                     Toast.LENGTH_SHORT).show();
@@ -111,8 +120,8 @@ public class MainActivity extends AppCompatActivity {
         return String.valueOf(result);
     }
 
-    private String subtract(String numberOne, String numberTwo){
-        if(numberOne.equals("")|| numberTwo.isEmpty()) {
+    private String subtract(String numberOne, String numberTwo) {
+        if (numberOne.equals("") || numberTwo.isEmpty()) {
             Toast.makeText(this,
                     "Please fill the empty gaps with valid numbers pretty pleeaaaaase",
                     Toast.LENGTH_SHORT).show();
@@ -123,10 +132,11 @@ public class MainActivity extends AppCompatActivity {
         int result = c - d;
         /*return Integer.toString(result);*/
         return String.valueOf(result);
+
     }
 
-    private String multiply(String numberOne, String numberTwo){
-        if(numberOne.equals("")|| numberTwo.isEmpty()) {
+    private String multiply(String numberOne, String numberTwo) {
+        if (numberOne.equals("") || numberTwo.isEmpty()) {
             Toast.makeText(this,
                     "Please fill the empty gaps with valid numbers pretty pleeaaaaase",
                     Toast.LENGTH_SHORT).show();
@@ -138,8 +148,9 @@ public class MainActivity extends AppCompatActivity {
         /*return Integer.toString(result);*/
         return String.valueOf(result);
     }
-    private String divide(String numberOne, String numberTwo){
-        if(numberOne.equals("")|| numberTwo.isEmpty()) {
+
+    private String divide(String numberOne, String numberTwo) {
+        if (numberOne.equals("") || numberTwo.isEmpty()) {
             Toast.makeText(this,
                     "Please fill the empty gaps with valid numbers pretty pleeaaaaase",
                     Toast.LENGTH_SHORT).show();
@@ -147,10 +158,31 @@ public class MainActivity extends AppCompatActivity {
         }
         int g = Integer.parseInt(numberOne);
         int h = Integer.parseInt(numberTwo);
-        int result = (g/ h);
+        int result = (g / h);
         /*return Integer.toString(result);*/
         return String.valueOf(result);
     }
 
+    private void writeLogsToFile() {
+        File file = new File(getFilesDir(), "Logs.txt");
+        //FileOutputStream fileOutputStream = null;
 
+        try (FileOutputStream fileOutputStream = openFileOutput("Logs.txt", Context.MODE_PRIVATE)) {
+
+            StringBuilder stringBuilder = new StringBuilder();
+            for (String result : log) {
+                stringBuilder.append(result);
+                stringBuilder.append("\n");
+
+
+            }
+            fileOutputStream.write(stringBuilder.toString().getBytes());
+
+        } catch (IOException iOxception) {
+            Toast.makeText(this, "File Not Found", Toast.LENGTH_SHORT).show();
+            iOxception.printStackTrace();
+
+        }
+
+    }
 }
