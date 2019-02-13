@@ -3,6 +3,8 @@ package devanir.soaresjunior.calculator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import java.io.File;
@@ -17,20 +19,27 @@ public class LogsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log);
 
+
         TextView tvLogs = findViewById(R.id.tvLogs);
 
-        ArrayList<String> logs =
-                getIntent().getStringArrayListExtra("LogsResult");
+        ArrayList<String> logs = getIntent().getStringArrayListExtra("LogsResult");
         StringBuilder stringBuilder = new StringBuilder();
     for (int i = 0; i <logs.size(); i++){
        stringBuilder.append(logs.get(i));
        stringBuilder.append("\n");
 
     }
-        /*tvLogs.setText(stringBuilder.toString());*/
-        Room room = getIntent().getParcelableExtra("Room");
-        tvLogs.setText(readDataFromFile());
+        //tvLogs.setText(stringBuilder.toString());
+        /*Room room = getIntent().getParcelableExtra("Room");*/
+//        tvLogs.setText(readDataFromFile());
+        RecyclerView recyclerView =findViewById(R.id.rv_results);
+LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+recyclerView.setLayoutManager(linearLayoutManager);
+        ResultsAdapter resultsAdapter = new ResultsAdapter(logs);
+        recyclerView.setAdapter(resultsAdapter);
     }
+
+
     private String readDataFromFile(){
         File file = new File(getFilesDir(), "Logs.txt");
         int size = (int) file.length();
